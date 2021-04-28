@@ -21,7 +21,6 @@ namespace DitheringForAlpha
         List<Image> AllFrames = new List<Image>(); //contains all frames for when animation is used
         string path; //needed to use a string for it when saving mutiple images to one path
         Image Original_;
-        Bitmap tmptmp1;
 
         private void open_Click(object sender, EventArgs e) //lets the user add/import images. Got this code from another projeckt, but might have stolen it from a tutorial...
         {
@@ -332,7 +331,7 @@ namespace DitheringForAlpha
                     {
                         OldPixel = Color.FromArgb(pb1.GetPixel(x, y).ToArgb());
 
-                        NewPixel = LimitColors(x, y, OldPixel, (int)numericUpDown1.Value);
+                        NewPixel = LimitColors(x, y, OldPixel, (int)dither_steps.Value);
                         pb1.SetPixel(x, y, NewPixel); //uncomment for cool effect lol
                         Vector4 qErr = GetErr(x, y, OldPixel, NewPixel);
 
@@ -534,16 +533,6 @@ namespace DitheringForAlpha
             Environment.Exit(0);
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            //fugg
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
             pictureBox1.Image = AllFrames.ElementAt((int)current_frame.Value);
@@ -685,11 +674,6 @@ namespace DitheringForAlpha
             //    pictureBox1.Image = zoomed.Image;
             //    isZoomed = false;
             //}
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

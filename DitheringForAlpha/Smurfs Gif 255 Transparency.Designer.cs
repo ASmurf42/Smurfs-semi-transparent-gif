@@ -39,7 +39,7 @@
             this.GreyScale = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lable_dither_1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.dither_steps = new System.Windows.Forms.NumericUpDown();
             this.ditherAlpha = new System.Windows.Forms.Button();
             this.Alpha_err_fix = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -49,7 +49,7 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label_animation_1 = new System.Windows.Forms.Label();
             this.open = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -57,7 +57,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.playback_fps)).BeginInit();
             this.groupBox_Dithering.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dither_steps)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox_Dithering_A.SuspendLayout();
             this.groupBox_Animation.SuspendLayout();
@@ -184,7 +184,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lable_dither_1);
-            this.groupBox2.Controls.Add(this.numericUpDown1);
+            this.groupBox2.Controls.Add(this.dither_steps);
             this.groupBox2.Location = new System.Drawing.Point(128, 10);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(80, 32);
@@ -200,30 +200,29 @@
             this.lable_dither_1.TabIndex = 15;
             this.lable_dither_1.Text = "Steps";
             // 
-            // numericUpDown1
+            // dither_steps
             // 
-            this.numericUpDown1.AccessibleDescription = "The ammount of different possible colors in dither image";
-            this.numericUpDown1.Location = new System.Drawing.Point(5, 8);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.dither_steps.AccessibleDescription = "The ammount of different possible colors in dither image";
+            this.dither_steps.Location = new System.Drawing.Point(5, 8);
+            this.dither_steps.Margin = new System.Windows.Forms.Padding(2);
+            this.dither_steps.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.dither_steps.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(30, 20);
-            this.numericUpDown1.TabIndex = 5;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.dither_steps.Name = "dither_steps";
+            this.dither_steps.Size = new System.Drawing.Size(30, 20);
+            this.dither_steps.TabIndex = 5;
+            this.dither_steps.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // ditherAlpha
             // 
@@ -248,7 +247,6 @@
             this.Alpha_err_fix.TabIndex = 8;
             this.Alpha_err_fix.Text = "Fix Error";
             this.Alpha_err_fix.UseVisualStyleBackColor = true;
-            this.Alpha_err_fix.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // groupBox4
             // 
@@ -327,21 +325,21 @@
             // 
             this.groupBox6.BackColor = System.Drawing.Color.Transparent;
             this.groupBox6.Controls.Add(this.current_frame);
-            this.groupBox6.Controls.Add(this.label2);
+            this.groupBox6.Controls.Add(this.label_animation_1);
             this.groupBox6.Location = new System.Drawing.Point(5, 15);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(138, 35);
             this.groupBox6.TabIndex = 21;
             this.groupBox6.TabStop = false;
             // 
-            // label2
+            // label_animation_1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(57, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 13);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "Current frame";
+            this.label_animation_1.AutoSize = true;
+            this.label_animation_1.Location = new System.Drawing.Point(57, 12);
+            this.label_animation_1.Name = "label_animation_1";
+            this.label_animation_1.Size = new System.Drawing.Size(70, 13);
+            this.label_animation_1.TabIndex = 20;
+            this.label_animation_1.Text = "Current frame";
             // 
             // open
             // 
@@ -386,7 +384,7 @@
             this.groupBox_Dithering.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dither_steps)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox_Dithering_A.ResumeLayout(false);
             this.groupBox_Dithering_A.PerformLayout();
@@ -411,7 +409,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button dither;
         private System.Windows.Forms.Button ditherAlpha;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown dither_steps;
         private System.Windows.Forms.CheckBox Alpha_err_fix;
         private System.Windows.Forms.CheckBox GreyScale;
         private System.Windows.Forms.Label lable_dither_1;
@@ -422,7 +420,7 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label_animation_1;
         private System.Windows.Forms.Button open;
         private System.Windows.Forms.Button reset;
     }
