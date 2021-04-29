@@ -45,6 +45,7 @@ namespace DitheringForAlpha
                 current_frame.Maximum = AllFrames.Count - 1; //sets the correct range for the induvidual frame viewr thingy (play around with the program, you'll figure it out) so it dosen't get a index out of range
                 pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
                 Original_ = pictureBox1;
+
                 Console.WriteLine("height " + pictureBox1.Image.Height + "\n" + "width " + pictureBox1.Image.Width + "\n"); 
 
                 groupBox_Dithering.Enabled = true; //enables the buttons for dithering
@@ -118,200 +119,7 @@ namespace DitheringForAlpha
 
             //note to future self, inplument multithreading for lare immages, both of single dithering/AlphaD, maybe even for DitherAllFrames() as well
         }
-        //void DoDitherR() 
-        //{
-        //    if (opened)
-        //    {
-        //        Bitmap pb1 = (Bitmap)pictureBox1.Image;
-        //        Color OldPixel;
-        //        Color NewPixel;
-        //        Color tmp;
-        //        if (GreyScale.Checked)
-        //            GreyScaleImage(pb1);
-
-        //        for (int y = 0; y < pb1.Height - 1; y++)
-        //        {
-        //            Console.WriteLine(y);
-        //            for (int x = 1; x < pb1.Width - 1; x++)
-        //            {
-        //                OldPixel = Color.FromArgb(pb1.GetPixel(x, y).ToArgb());
-
-        //                NewPixel = LimitColors(x, y, OldPixel, (int)numericUpDown1.Value);
-        //                pb1.SetPixel(x, y, NewPixel); //uncomment for cool effect lol
-        //                Vector4 qErr = GetErr(x, y, OldPixel, NewPixel);
-
-        //                tmp = pb1.GetPixel(x + 1, y);
-        //                pb1.SetPixel(
-        //                    x + 1, y, Color.FromArgb(
-        //                    (int)Clamp(tmp.R + qErr.R * (7 / 16f)),
-        //                    tmp.G,
-        //                    tmp.B
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x - 1, y + 1);
-        //                pb1.SetPixel(
-        //                    x - 1, y + 1, Color.FromArgb(
-        //                    (int)Clamp(tmp.R + qErr.R * (3 / 16f)),
-        //                    tmp.G,
-        //                    tmp.B
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x, y + 1);
-        //                pb1.SetPixel(
-        //                    x, y + 1, Color.FromArgb(
-        //                    (int)Clamp(tmp.R + qErr.R * (5 / 16f)),
-        //                    tmp.G,
-        //                    tmp.B
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x + 1, y + 1);
-        //                pb1.SetPixel(
-        //                    x + 1, y + 1, Color.FromArgb(
-        //                    (int)Clamp(tmp.R + qErr.R * (1 / 16f)),
-        //                    tmp.G,
-        //                    tmp.B
-
-        //                    ));
-
-        //            }
-        //        }
-
-        //        pictureBox1.Image = pb1;
-        //    }
-        //}
-        //void DoDitherG()
-        //{
-        //    if (opened)
-        //    {
-        //        Bitmap pb1 = (Bitmap)pictureBox1.Image;
-        //        Color OldPixel;
-        //        Color NewPixel;
-        //        Color tmp;
-        //        if (GreyScale.Checked)
-        //            GreyScaleImage(pb1);
-
-        //        for (int y = 0; y < pb1.Height - 1; y++)
-        //        {
-        //            Console.WriteLine(y);
-        //            for (int x = 1; x < pb1.Width - 1; x++)
-        //            {
-        //                OldPixel = Color.FromArgb(pb1.GetPixel(x, y).ToArgb());
-
-        //                NewPixel = LimitColors(x, y, OldPixel, (int)numericUpDown1.Value);
-        //                pb1.SetPixel(x, y, NewPixel); //uncomment for cool effect lol
-        //                Vector4 qErr = GetErr(x, y, OldPixel, NewPixel);
-
-        //                tmp = pb1.GetPixel(x + 1, y);
-        //                pb1.SetPixel(
-        //                    x + 1, y, Color.FromArgb(
-        //                    tmp.R,
-        //                    (int)Clamp(tmp.G + qErr.G * (7 / 16f)),
-        //                    tmp.B
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x - 1, y + 1);
-        //                pb1.SetPixel(
-        //                    x - 1, y + 1, Color.FromArgb(
-        //                    tmp.R,
-        //                    (int)Clamp(tmp.G + qErr.G * (3 / 16f)),
-        //                    tmp.B
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x, y + 1);
-        //                pb1.SetPixel(
-        //                    x, y + 1, Color.FromArgb(
-        //                    tmp.R,
-        //                    (int)Clamp(tmp.G + qErr.G * (5 / 16f)),
-        //                    tmp.B
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x + 1, y + 1);
-        //                pb1.SetPixel(
-        //                    x + 1, y + 1, Color.FromArgb(
-        //                    tmp.R,
-        //                    (int)Clamp(tmp.G + qErr.G * (1 / 16f)),
-        //                    tmp.B
-
-        //                    ));
-
-        //            }
-        //        }
-
-        //        pictureBox1.Image = pb1;
-        //    }
-        //}
-        //void DoDitherB()
-        //{
-        //    if (opened)
-        //    {
-        //        Bitmap pb1 = (Bitmap)pictureBox1.Image;
-        //        Color OldPixel;
-        //        Color NewPixel;
-        //        Color tmp;
-        //        if (GreyScale.Checked)
-        //            GreyScaleImage(pb1);
-
-        //        for (int y = 0; y < pb1.Height - 1; y++)
-        //        {
-
-
-        //            Console.WriteLine(y);
-        //            for (int x = 1; x < pb1.Width - 1; x++)
-        //            {
-        //                OldPixel = Color.FromArgb(pb1.GetPixel(x, y).ToArgb());
-
-        //                NewPixel = LimitColors(x, y, OldPixel, (int)numericUpDown1.Value);
-        //                pb1.SetPixel(x, y, NewPixel); //uncomment for cool effect lol
-        //                Vector4 qErr = GetErr(x, y, OldPixel, NewPixel);
-
-        //                tmp = pb1.GetPixel(x + 1, y);
-        //                pb1.SetPixel(
-        //                    x + 1, y, Color.FromArgb(
-        //                    tmp.R,
-        //                    tmp.G,
-        //                    (int)Clamp(tmp.B + qErr.B * (7 / 16f))
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x - 1, y + 1);
-        //                pb1.SetPixel(
-        //                    x - 1, y + 1, Color.FromArgb(
-        //                    tmp.R,
-        //                    tmp.G,
-        //                    (int)Clamp(tmp.B + qErr.B * (3 / 16f))
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x, y + 1);
-        //                pb1.SetPixel(
-        //                    x, y + 1, Color.FromArgb(
-        //                    tmp.R,
-        //                    tmp.G,
-        //                    (int)Clamp(tmp.B + qErr.B * (5 / 16f))
-
-        //                    ));
-
-        //                tmp = pb1.GetPixel(x + 1, y + 1);
-        //                pb1.SetPixel(
-        //                    x + 1, y + 1, Color.FromArgb(
-        //                    tmp.R,
-        //                    tmp.G,
-        //                    tmp.B
-
-        //                    ));
-
-        //            }
-        //        }
-
-        //        pictureBox1.Image = pb1;
-        //    }
-        //}
+        
 
         void DoDither() //normal floyd steinberg dithering, semi optemised, read the wiki on it and code trains vid for an explinatio of the algo
         {
@@ -651,7 +459,8 @@ namespace DitheringForAlpha
 
         private void pictureBox1_Click(object sender, EventArgs e) //code for zooming in on pictubebox1 when its clicked, if possible it should zoom in on the cursors possition
         {
-            //if (!isZoomed) { 
+            //if (!isZoomed)
+            //{
             //    Graphics graphics = Graphics.FromImage(pictureBox1.Image);
             //    PictureBox zoomed = pictureBox1;
             //    zoomed.Height = zoomed.Height * 2;
@@ -668,10 +477,18 @@ namespace DitheringForAlpha
             //    //graphics.DrawImage(zoomed.Image, new Rectangle(-100, -100, zoomed.Width, zoomed.Height));
 
 
-                
+
             //    pictureBox1.Image = zoomed.Image;
             //    isZoomed = false;
             //}
+
+            //pictureBox1.ClientSize = new Size(pictureBox1.Width / 2, pictureBox1.Height / 2);
+
+            PictureBox tmpZoom = Original_;
+
+            tmpZoom.Height *= 2;
+
+
         }
     }
 }
