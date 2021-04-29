@@ -20,7 +20,7 @@ namespace DitheringForAlpha
         bool opened = false; //used for when saving and doing some checks
         List<Image> AllFrames = new List<Image>(); //contains all frames for when animation is used
         string path; //needed to use a string for it when saving mutiple images to one path
-        Image Original_;
+        PictureBox Original_;
 
         private void open_Click(object sender, EventArgs e) //lets the user add/import images. Got this code from another projeckt, but might have stolen it from a tutorial...
         {
@@ -44,7 +44,7 @@ namespace DitheringForAlpha
 
                 current_frame.Maximum = AllFrames.Count - 1; //sets the correct range for the induvidual frame viewr thingy (play around with the program, you'll figure it out) so it dosen't get a index out of range
                 pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
-                Original_ = pictureBox1.Image;
+                Original_ = pictureBox1;
                 Console.WriteLine("height " + pictureBox1.Image.Height + "\n" + "width " + pictureBox1.Image.Width + "\n"); 
 
                 groupBox_Dithering.Enabled = true; //enables the buttons for dithering
@@ -317,7 +317,7 @@ namespace DitheringForAlpha
         {
             if (opened)
             {
-                Bitmap pb1 = (Bitmap)Original_;
+                Bitmap pb1 = (Bitmap)Original_.Image;
                 Color OldPixel;
                 Color NewPixel;
                 Color tmp;
@@ -403,7 +403,7 @@ namespace DitheringForAlpha
         {
             if (opened)
             {
-                Bitmap pb1 = (Bitmap)Original_;
+                Bitmap pb1 = (Bitmap)Original_.Image;
                 Color OldPixel;
                 Color NewPixel;
                 Color tmp;
@@ -536,7 +536,6 @@ namespace DitheringForAlpha
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
             pictureBox1.Image = AllFrames.ElementAt((int)current_frame.Value);
-            Original_ = pictureBox1.Image;
         }
 
         private void Dith_all_Click(object sender, EventArgs e)
@@ -647,7 +646,6 @@ namespace DitheringForAlpha
                 else
                     i = 1;
                 pictureBox1.Image = AllFrames.ElementAt(i - 1);
-                Original_ = pictureBox1.Image;
             }
         }
 
