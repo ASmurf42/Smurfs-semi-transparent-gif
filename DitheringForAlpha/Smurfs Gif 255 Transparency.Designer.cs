@@ -403,7 +403,7 @@
             this.Orginal_.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Orginal_.Location = new System.Drawing.Point(22, 420);
             this.Orginal_.Name = "Orginal_";
-            this.Orginal_.Size = new System.Drawing.Size(197, 191);
+            this.Orginal_.Size = new System.Drawing.Size(200, 200);
             this.Orginal_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Orginal_.TabIndex = 22;
             this.Orginal_.TabStop = false;
