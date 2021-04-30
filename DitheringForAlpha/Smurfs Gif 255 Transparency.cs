@@ -49,7 +49,7 @@ namespace DitheringForAlpha
                 //pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
                 //Original_ = pictureBox1;
                 //Original_.Image = Image.FromFile(openFileDialog1.FileName);
-                pbOrignal.Image = Original_.Image;
+                Orginal_.Image = Original_.Image;
 
                 Console.WriteLine("height " + pictureBox1.Image.Height + "\n" + "width " + pictureBox1.Image.Width + "\n"); 
 
@@ -119,9 +119,8 @@ namespace DitheringForAlpha
             //    //botched af way to do make it work, preferably it would need a rewetie of the way I do all the stuff do "setup" the algorithm (for loops and stuff)
             //}
             //else
-            pictureBox1.Image = DoDither(pbOrignal.Image);
+            pictureBox1.Image = DoDither(Orginal_.Image); //image of 
             
-
             //note to future self, inplument multithreading for lare immages, both of single dithering/AlphaD, maybe even for DitherAllFrames() as well
         }
         
@@ -492,7 +491,7 @@ namespace DitheringForAlpha
 
         private void pbOrignal_Click(object sender, EventArgs e)
         {
-            Bitmap pb3 = (Bitmap)pbOrignal.Image;
+            Bitmap pb3 = (Bitmap)Orginal_.Image;
 
             for (int y = 0; y < pb3.Height - 1; y++)
             {
@@ -502,7 +501,7 @@ namespace DitheringForAlpha
                 }
             }
 
-            pbOrignal.Image = pb3;
+            Orginal_.Image = pb3;
         }
     }
 }
