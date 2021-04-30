@@ -114,21 +114,22 @@ namespace DitheringForAlpha
             //    //botched af way to do make it work, preferably it would need a rewetie of the way I do all the stuff do "setup" the algorithm (for loops and stuff)
             //}
             //else
-            DoDither();
+            pictureBox1.Image = DoDither(Original_);
 
 
             //note to future self, inplument multithreading for lare immages, both of single dithering/AlphaD, maybe even for DitherAllFrames() as well
         }
         
 
-        void DoDither() //normal floyd steinberg dithering, semi optemised, read the wiki on it and code trains vid for an explinatio of the algo
+        Bitmap DoDither(PictureBox Orginal_) //normal floyd steinberg dithering, semi optemised, read the wiki on it and code trains vid for an explinatio of the algo
         {
+            Bitmap pb1 = (Bitmap)Original_.Image;
+            Color OldPixel;
+            Color NewPixel;
+            Color tmp;
+
             if (opened)
             {
-                Bitmap pb1 = (Bitmap)Original_.Image;
-                Color OldPixel;
-                Color NewPixel;
-                Color tmp;
                 if (GreyScale.Checked)
                     GreyScaleImage(pb1);
 
@@ -150,7 +151,6 @@ namespace DitheringForAlpha
                             (int)Clamp(tmp.R + qErr.R * (7 / 16f)),
                             (int)Clamp(tmp.G + qErr.G * (7 / 16f)),
                             (int)Clamp(tmp.B + qErr.B * (7 / 16f))
-
                             ));
 
                         tmp = pb1.GetPixel(x - 1, y + 1);
@@ -160,7 +160,6 @@ namespace DitheringForAlpha
                             (int)Clamp(tmp.R + qErr.R * (3 / 16f)),
                             (int)Clamp(tmp.G + qErr.G * (3 / 16f)),
                             (int)Clamp(tmp.B + qErr.B * (3 / 16f))
-
                             ));
 
                         tmp = pb1.GetPixel(x, y + 1);
@@ -170,7 +169,6 @@ namespace DitheringForAlpha
                             (int)Clamp(tmp.R + qErr.R * (5 / 16f)),
                             (int)Clamp(tmp.G + qErr.G * (5 / 16f)),
                             (int)Clamp(tmp.B + qErr.B * (5 / 16f))
-
                             ));
 
                         tmp = pb1.GetPixel(x + 1, y + 1);
@@ -182,12 +180,10 @@ namespace DitheringForAlpha
                             (int)Clamp(tmp.B + qErr.B * (1 / 16f))
 
                             ));
-
                     }
                 }
-
-                pictureBox1.Image = pb1; 
             }
+            return pb1;
         }
 
         private void GreyScaleImage(Bitmap pb1)
@@ -291,9 +287,7 @@ namespace DitheringForAlpha
 
         static Color LimitAlpha(int x, int y, Color OldPixel, int factor)
         {
-            return Color.FromArgb(
-                (int)(Math.Round(factor * (double)(OldPixel.A / 255f)) * (255f / factor)), OldPixel
-                );
+            return Color.FromArgb((int)(Math.Round(factor * (double)(OldPixel.A / 255f)) * (255f / factor)), OldPixel);
         }
 
         static Vector4 GetErr(int x, int y, Color OldPixel, Color NewPixel)
