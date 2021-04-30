@@ -52,6 +52,7 @@
             this.label_animation_1 = new System.Windows.Forms.Label();
             this.open = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
+            this.pbOrignal = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.current_frame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playback_fps)).BeginInit();
@@ -63,6 +64,7 @@
             this.groupBox_Animation.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOrignal)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -393,11 +395,22 @@
             this.reset.UseVisualStyleBackColor = true;
             this.reset.Click += new System.EventHandler(this.reset_Click);
             // 
+            // pbOrignal
+            // 
+            this.pbOrignal.Location = new System.Drawing.Point(435, 427);
+            this.pbOrignal.Name = "pbOrignal";
+            this.pbOrignal.Size = new System.Drawing.Size(197, 191);
+            this.pbOrignal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbOrignal.TabIndex = 22;
+            this.pbOrignal.TabStop = false;
+            this.pbOrignal.Click += new System.EventHandler(this.pbOrignal_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 684);
+            this.Controls.Add(this.pbOrignal);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox4);
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -419,6 +432,7 @@
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOrignal)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -449,6 +463,7 @@
         private System.Windows.Forms.Label label_animation_1;
         private System.Windows.Forms.Button open;
         private System.Windows.Forms.Button reset;
+        private System.Windows.Forms.PictureBox pbOrignal;
     }
 }
 

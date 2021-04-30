@@ -33,7 +33,9 @@ namespace DitheringForAlpha
                 {
                     PictureBox pb = new PictureBox(); //creates a new picture box for each new frame, works fine now but could be improved upon for better ram usage potentially. 
                     Image loadedImage = Image.FromFile(file);
-                    pictureBox1.Image = Image.FromFile(file);
+                    pictureBox1.Image = loadedImage;
+                    Original_ = pictureBox1;
+                    Original_.Image = loadedImage;
 
                     AllFrames.Add(loadedImage);
                     pb.Height = loadedImage.Height; //some nessesary stuff to get images put into objects correctly
@@ -43,8 +45,11 @@ namespace DitheringForAlpha
                 }
 
                 current_frame.Maximum = AllFrames.Count - 1; //sets the correct range for the induvidual frame viewr thingy (play around with the program, you'll figure it out) so it dosen't get a index out of range
-                pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
-                Original_ = pictureBox1;
+
+                //pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
+                //Original_ = pictureBox1;
+                //Original_.Image = Image.FromFile(openFileDialog1.FileName);
+                pbOrignal.Image = Original_.Image;
 
                 Console.WriteLine("height " + pictureBox1.Image.Height + "\n" + "width " + pictureBox1.Image.Width + "\n"); 
 
@@ -114,16 +119,16 @@ namespace DitheringForAlpha
             //    //botched af way to do make it work, preferably it would need a rewetie of the way I do all the stuff do "setup" the algorithm (for loops and stuff)
             //}
             //else
-            pictureBox1.Image = DoDither(Original_);
-
+            pictureBox1.Image = DoDither(pbOrignal.Image);
+            
 
             //note to future self, inplument multithreading for lare immages, both of single dithering/AlphaD, maybe even for DitherAllFrames() as well
         }
         
 
-        Bitmap DoDither(PictureBox Orginal_) //normal floyd steinberg dithering, semi optemised, read the wiki on it and code trains vid for an explinatio of the algo
+        Bitmap DoDither(Image toDither) //normal floyd steinberg dithering, semi optemised, read the wiki on it and code trains vid for an explinatio of the algo
         {
-            Bitmap pb1 = (Bitmap)Original_.Image;
+            Bitmap pb1 = new Bitmap(toDither);
             Color OldPixel;
             Color NewPixel;
             Color tmp;
@@ -483,6 +488,21 @@ namespace DitheringForAlpha
             tmpZoom.Height *= 2;
 
 
+        }
+
+        private void pbOrignal_Click(object sender, EventArgs e)
+        {
+            Bitmap pb3 = (Bitmap)pbOrignal.Image;
+
+            for (int y = 0; y < pb3.Height - 1; y++)
+            {
+                for (int x = 0; x < pb3.Width - 1; x++)
+                {
+                    pb3.SetPixel(x, y, Color.Red);
+                }
+            }
+
+            pbOrignal.Image = pb3;
         }
     }
 }
