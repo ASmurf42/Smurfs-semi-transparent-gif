@@ -211,7 +211,7 @@ namespace DitheringForAlpha
         {
             if (opened)
             {
-                Bitmap pb1 = (Bitmap)Original_.Image;
+                Bitmap pb1 = new Bitmap(Orginal_.Image);
                 Color OldPixel;
                 Color NewPixel;
                 Color tmp;
@@ -273,7 +273,7 @@ namespace DitheringForAlpha
                     }
                 }
                 if (Alpha_err_fix.Checked)
-                    FixAlphaErr((Bitmap)Image.FromFile(openFileDialog1.FileName), pb1);
+                    FixAlphaErr(pb1, Orginal_);
                 pictureBox1.Image = pb1;
             }
 
@@ -317,8 +317,11 @@ namespace DitheringForAlpha
 
         }
 
-        static void FixAlphaErr(Bitmap pre_limitColor, Bitmap pb1)
+        static void FixAlphaErr(Bitmap pb1, PictureBox Orginal_)
         {
+            Bitmap pre_limitColor = new Bitmap(Orginal_.Image);
+
+
             for (int y = 0; y < pb1.Height; y++)
             {
                 for (int x = 0; x < pb1.Width; x++)
@@ -351,7 +354,7 @@ namespace DitheringForAlpha
                 int i = 0;
                 foreach (Image item in AllFrames)
                 {
-                    //Console.WriteLine("started thread " + i);
+                    Console.WriteLine("started thread " + i);
                     Thread thread1 = new Thread(() => Dither_All_Frames(Alpha_err_fix, openFileDialog1, pictureBox1, item, i)); //ughh.... passing all thoes things feels wrong
                     thread1.Start();
                     i++;
@@ -359,7 +362,7 @@ namespace DitheringForAlpha
             }
         }
 
-        static void Dither_All_Frames(CheckBox Alpha_err_fix, OpenFileDialog openFileDialog1, PictureBox pictureBox1, Image item, int i)
+        void Dither_All_Frames(CheckBox Alpha_err_fix, OpenFileDialog openFileDialog1, PictureBox pictureBox1, Image item, int i)
         {
             Bitmap pb1 = (Bitmap)item;
             Color OldPixel;
@@ -375,6 +378,8 @@ namespace DitheringForAlpha
                     OldPixel = Color.FromArgb(pb1.GetPixel(x, y).ToArgb());
                     if (OldPixel.A != 255)
                     {
+                        
+                        Console.WriteLine(i + " y " + y + "  x " + x);
                         NewPixel = LimitAlpha(x, y, OldPixel, 1);
                         pb1.SetPixel(x, y, NewPixel); //uncomment for cool effect lol
                         Vector4 qErr = GetErr(x, y, OldPixel, NewPixel);
@@ -385,8 +390,8 @@ namespace DitheringForAlpha
                             (int)Clamp(tmp.A + qErr.A * (7 / 16f)), tmp.R,
                             tmp.G,
                             tmp.B
-
                             ));
+
 
                         tmp = pb1.GetPixel(x - 1, y + 1);
                         pb1.SetPixel(
@@ -394,7 +399,6 @@ namespace DitheringForAlpha
                             (int)Clamp(tmp.A + qErr.A * (3 / 16f)), tmp.R,
                             tmp.G,
                             tmp.B
-
                             ));
 
                         tmp = pb1.GetPixel(x, y + 1);
@@ -403,7 +407,6 @@ namespace DitheringForAlpha
                             (int)Clamp(tmp.A + qErr.A * (5 / 16f)), tmp.R,
                             tmp.G,
                             tmp.B
-
                             ));
 
                         tmp = pb1.GetPixel(x + 1, y + 1);
@@ -413,7 +416,6 @@ namespace DitheringForAlpha
                             tmp.R,
                             tmp.G,
                             tmp.B
-
                             ));
                     }
                     else
@@ -424,7 +426,7 @@ namespace DitheringForAlpha
                 }
             }
             if (Alpha_err_fix.Checked)
-                FixAlphaErr((Bitmap)Image.FromFile(openFileDialog1.FileName), pb1);
+                FixAlphaErr(pb1, Orginal_);
             pictureBox1.Image = pb1;
             Console.WriteLine(i);
         }
@@ -482,26 +484,29 @@ namespace DitheringForAlpha
 
             //pictureBox1.ClientSize = new Size(pictureBox1.Width / 2, pictureBox1.Height / 2);
 
-            PictureBox tmpZoom = Original_;
+            //PictureBox tmpZoom = Original_;
 
-            tmpZoom.Height *= 2;
+            //tmpZoom.Height *= 2;
 
 
-        }
 
-        private void pbOrignal_Click(object sender, EventArgs e)
-        {
-            Bitmap pb3 = (Bitmap)Orginal_.Image;
+            //crude test code that will mess up the whole Orginal_ system, ***MUST REMOVE LATER BEFORE RELEASE***
 
-            for (int y = 0; y < pb3.Height - 1; y++)
+            Bitmap pb1 = (Bitmap)pictureBox1.Image;
+
+            for (int y = 0; y < pb1.Height; y++)
             {
-                for (int x = 0; x < pb3.Width - 1; x++)
+                Console.WriteLine(y);
+                for (int x = 0; x < pb1.Width; x++)
                 {
-                    pb3.SetPixel(x, y, Color.Red);
+                    if (pb1.GetPixel(x, y).A == 255)
+                        pb1.SetPixel(x, y, Color.Red);
+                    else { }
                 }
             }
+            pictureBox1.Image = pb1;
 
-            Orginal_.Image = pb3;
-        }
+
+        }  
     }
 }
