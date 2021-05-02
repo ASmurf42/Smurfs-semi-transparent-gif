@@ -335,6 +335,21 @@ namespace DitheringForAlpha
                 }
             }
         }
+        static void FixAlphaErrMultiThread(Bitmap Original, Bitmap pb1) //old implumentation that works with multi threading. Dosen't allow for re dithering for all frames but that's asking a bit much imo. if I would implument something like Orginal_ but for all frames it would porbably need a copy of the list AllFrames
+        {
+            for (int y = 0; y < pb1.Height; y++)
+            {
+                for (int x = 0; x < pb1.Width; x++)
+                {
+                    Color OldPixel = Original.GetPixel(x, y);
+                    if (OldPixel.A == 255)
+                    {
+                        pb1.SetPixel(x, y, OldPixel);
+                    }
+
+                }
+            }
+        }
 
         private void reset_Click(object sender, EventArgs e)
         {
@@ -379,7 +394,7 @@ namespace DitheringForAlpha
                     if (OldPixel.A != 255)
                     {
                         
-                        Console.WriteLine(i + " y " + y + "  x " + x);
+                        //Console.WriteLine(i + " y " + y + "  x " + x);
                         NewPixel = LimitAlpha(x, y, OldPixel, 1);
                         pb1.SetPixel(x, y, NewPixel); //uncomment for cool effect lol
                         Vector4 qErr = GetErr(x, y, OldPixel, NewPixel);
@@ -426,7 +441,7 @@ namespace DitheringForAlpha
                 }
             }
             if (Alpha_err_fix.Checked)
-                FixAlphaErr(pb1, Orginal_);
+                FixAlphaErrMultiThread((Bitmap)Image.FromFile(openFileDialog1.FileName), pb1);
             pictureBox1.Image = pb1;
             Console.WriteLine(i);
         }
