@@ -44,7 +44,6 @@
             this.ditherAlpha = new System.Windows.Forms.Button();
             this.Alpha_err_fix = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.PBOrginal_ = new System.Windows.Forms.PictureBox();
             this.save = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
             this.groupBox_Dithering_A = new System.Windows.Forms.GroupBox();
@@ -54,8 +53,8 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label_animation_1 = new System.Windows.Forms.Label();
             this.open = new System.Windows.Forms.Button();
+            this.PBOrginal_ = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.current_frame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playback_fps)).BeginInit();
@@ -63,11 +62,11 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dither_steps)).BeginInit();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PBOrginal_)).BeginInit();
             this.groupBox_Dithering_A.SuspendLayout();
             this.groupBox_Animation.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PBOrginal_)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -258,7 +257,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Controls.Add(this.save);
             this.groupBox4.Controls.Add(this.reset);
             this.groupBox4.Controls.Add(this.groupBox_Dithering);
@@ -273,17 +271,6 @@
             this.groupBox4.Size = new System.Drawing.Size(225, 556);
             this.groupBox4.TabIndex = 18;
             this.groupBox4.TabStop = false;
-            // 
-            // PBOrginal_
-            // 
-            this.PBOrginal_.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PBOrginal_.Location = new System.Drawing.Point(292, 343);
-            this.PBOrginal_.Margin = new System.Windows.Forms.Padding(2);
-            this.PBOrginal_.Name = "PBOrginal_";
-            this.PBOrginal_.Size = new System.Drawing.Size(150, 150);
-            this.PBOrginal_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PBOrginal_.TabIndex = 22;
-            this.PBOrginal_.TabStop = false;
             // 
             // save
             // 
@@ -394,15 +381,16 @@
             this.open.Click += new System.EventHandler(this.open_Click);
             this.open.MouseHover += new System.EventHandler(this.open_MouseHover);
             // 
-            // label2
+            // PBOrginal_
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 332);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 13);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Original Image";
+            this.PBOrginal_.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PBOrginal_.Location = new System.Drawing.Point(292, 343);
+            this.PBOrginal_.Margin = new System.Windows.Forms.Padding(2);
+            this.PBOrginal_.Name = "PBOrginal_";
+            this.PBOrginal_.Size = new System.Drawing.Size(150, 150);
+            this.PBOrginal_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PBOrginal_.TabIndex = 22;
+            this.PBOrginal_.TabStop = false;
             // 
             // Form1
             // 
@@ -424,8 +412,6 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dither_steps)).EndInit();
             this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PBOrginal_)).EndInit();
             this.groupBox_Dithering_A.ResumeLayout(false);
             this.groupBox_Dithering_A.PerformLayout();
             this.groupBox_Animation.ResumeLayout(false);
@@ -433,6 +419,7 @@
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PBOrginal_)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -465,7 +452,6 @@
         private System.Windows.Forms.Button reset;
         private System.Windows.Forms.PictureBox PBOrginal_;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label label2;
     }
 }
 
