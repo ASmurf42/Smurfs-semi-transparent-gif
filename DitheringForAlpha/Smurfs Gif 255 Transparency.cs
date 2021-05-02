@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace DitheringForAlpha
+namespace SmurfsAlphaDithering
 {
     public partial class Form1 : Form
     {
@@ -21,6 +21,10 @@ namespace DitheringForAlpha
         List<Image> AllFrames = new List<Image>(); //contains all frames for when animation is used
         string path; //needed to use a string for it when saving mutiple images to one path
         PictureBox Original_;
+        bool isAllowedToPlayback = true; //global variable used to kill animation thread when dithering start, to avoid object allready in use err
+        int completedOperations; //needs to be globals
+        int totalOperations; // needs to be global
+
 
         private void open_Click(object sender, EventArgs e) //lets the user add/import images. Got this code from another projeckt, but might have stolen it from a tutorial...
         {
@@ -49,7 +53,7 @@ namespace DitheringForAlpha
                 //pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
                 //Original_ = pictureBox1;
                 //Original_.Image = Image.FromFile(openFileDialog1.FileName);
-                Orginal_.Image = Original_.Image;
+                PBOrginal_.Image = Original_.Image;
 
                 Console.WriteLine("height " + pictureBox1.Image.Height + "\n" + "width " + pictureBox1.Image.Width + "\n"); 
 
@@ -119,7 +123,7 @@ namespace DitheringForAlpha
             //    //botched af way to do make it work, preferably it would need a rewetie of the way I do all the stuff do "setup" the algorithm (for loops and stuff)
             //}
             //else
-            pictureBox1.Image = DoDither(Orginal_.Image); //image of 
+            pictureBox1.Image = DoDither(PBOrginal_.Image); //image of 
             
             //note to future self, inplument multithreading for lare immages, both of single dithering/AlphaD, maybe even for DitherAllFrames() as well
         }
@@ -127,6 +131,8 @@ namespace DitheringForAlpha
 
         Bitmap DoDither(Image toDither) //normal floyd steinberg dithering, semi optemised, read the wiki on it and code trains vid for an explinatio of the algo
         {
+            isAllowedToPlayback = false;
+
             Bitmap pb1 = new Bitmap(toDither);
             Color OldPixel;
             Color NewPixel;
@@ -187,6 +193,7 @@ namespace DitheringForAlpha
                     }
                 }
             }
+            isAllowedToPlayback = true;
             return pb1;
         }
 
@@ -211,7 +218,9 @@ namespace DitheringForAlpha
         {
             if (opened)
             {
-                Bitmap pb1 = new Bitmap(Orginal_.Image);
+                isAllowedToPlayback = false;
+
+                Bitmap pb1 = new Bitmap(PBOrginal_.Image);
                 Color OldPixel;
                 Color NewPixel;
                 Color tmp;
@@ -273,8 +282,10 @@ namespace DitheringForAlpha
                     }
                 }
                 if (Alpha_err_fix.Checked)
-                    FixAlphaErr(pb1, Orginal_);
+                    FixAlphaErr(pb1, PBOrginal_);
                 pictureBox1.Image = pb1;
+
+                isAllowedToPlayback = true;
             }
 
         }
@@ -362,23 +373,46 @@ namespace DitheringForAlpha
             pictureBox1.Image = AllFrames.ElementAt((int)current_frame.Value);
         }
 
-        private void Dith_all_Click(object sender, EventArgs e)
+        void Dith_all_Click(object sender, EventArgs e)
         {
             if (opened)
             {
+                isAllowedToPlayback = false;
+
                 int i = 0;
+                Thread finished = new Thread(() => loadingBar());
+                finished.Start();
                 foreach (Image item in AllFrames)
                 {
-                    Console.WriteLine("started thread " + i);
                     Thread thread1 = new Thread(() => Dither_All_Frames(Alpha_err_fix, openFileDialog1, pictureBox1, item, i)); //ughh.... passing all thoes things feels wrong
+
                     thread1.Start();
                     i++;
                 }
+                
             }
+        }
+
+        void loadingBar()
+        {
+            totalOperations = AllFrames.Count * 2;
+            Console.WriteLine("Total operations " + totalOperations);
+            while (completedOperations < totalOperations + 1)
+            {
+                if (completedOperations == totalOperations)
+                {
+                    Console.WriteLine("finished!");
+                    completedOperations += 10;
+                }
+            }
+
         }
 
         void Dither_All_Frames(CheckBox Alpha_err_fix, OpenFileDialog openFileDialog1, PictureBox pictureBox1, Image item, int i)
         {
+            Console.WriteLine("Started dithering frame " + i);
+            completedOperations++;
+            Bitmap orginal_frame = new Bitmap(item);
             Bitmap pb1 = (Bitmap)item;
             Color OldPixel;
             Color NewPixel;
@@ -386,7 +420,7 @@ namespace DitheringForAlpha
 
             for (int y = 0; y < pb1.Height - 1; y++)
             {
-                //Console.WriteLine(y);
+                //Console.WriteLine(i + " " + y);
                 for (int x = 1; x < pb1.Width - 1; x++)
                 {
 
@@ -441,9 +475,11 @@ namespace DitheringForAlpha
                 }
             }
             if (Alpha_err_fix.Checked)
-                FixAlphaErrMultiThread((Bitmap)Image.FromFile(openFileDialog1.FileName), pb1);
+                FixAlphaErrMultiThread(orginal_frame, pb1);
             pictureBox1.Image = pb1;
-            Console.WriteLine(i);
+            Console.WriteLine("Complated dithering frame " + i);
+            completedOperations++;
+
         }
 
         private void animate_CheckedChanged(object sender, EventArgs e) //sets the correct state of the animation, basically turn it of and on correctly
@@ -452,23 +488,24 @@ namespace DitheringForAlpha
 
             if (animate.Checked)
             {
+                isAllowedToPlayback = true;
                 animate_woork.Start();
             }
             else
                 animate_woork.Abort();
         }
+
         void wooooooork (NumericUpDown playback_fps, NumericUpDown numericUpDown2, CheckBox animate, List<Image> AllFrames, PictureBox pictureBox1) //if you want to use a new thread you need to make it a seperate fucntion
         {
-
             int i = (int)numericUpDown2.Value; //current frame
-            while (animate.Checked || i<AllFrames.Count - 1) //this is all kinda garbage code but it seems to run 50 and 60 fps well so not planning on fixing it ;p
+            while (animate.Checked) //this is all kinda garbage code but it seems to run 50 and 60 fps well so not planning on fixing it ;p
             {
+                pictureBox1.Image = AllFrames.ElementAt(i - 1);
                 Thread.Sleep(1000 / (int)playback_fps.Value);
                 if (i < AllFrames.Count)
                     i++;
                 else
                     i = 1;
-                pictureBox1.Image = AllFrames.ElementAt(i - 1);
             }
         }
 
@@ -505,23 +542,38 @@ namespace DitheringForAlpha
 
 
 
-            //crude test code that will mess up the whole Orginal_ system, ***MUST REMOVE LATER BEFORE RELEASE***
-
-            Bitmap pb1 = (Bitmap)pictureBox1.Image;
-
-            for (int y = 0; y < pb1.Height; y++)
-            {
-                Console.WriteLine(y);
-                for (int x = 0; x < pb1.Width; x++)
-                {
-                    if (pb1.GetPixel(x, y).A == 255)
-                        pb1.SetPixel(x, y, Color.Red);
-                    else { }
-                }
-            }
-            pictureBox1.Image = pb1;
 
 
-        }  
+        }
+
+        private void open_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Press to Open an image or images", open);
+        }
+
+        private void save_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Press to Save all loaded images", save);
+        }
+
+        private void reset_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Restart the program, nothing will be saved", reset);
+        }
+
+        private void dither_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Dither current image using normal Floyd Steinberg Dithering \n Mainly here for fun lol", dither);
+        }
+        private void ditherAlpha_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.Show("Dithers the Alpha (transparency) of the current image", ditherAlpha);
+        }
+
+        private void Dith_all_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Dithers the Alpha (transparency) of All loaded frames", Dith_all);
+
+        }
     }
 }

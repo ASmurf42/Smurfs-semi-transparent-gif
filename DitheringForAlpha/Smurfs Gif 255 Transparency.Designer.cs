@@ -1,4 +1,4 @@
-﻿namespace DitheringForAlpha
+﻿namespace SmurfsAlphaDithering
 {
     partial class Form1
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.current_frame = new System.Windows.Forms.NumericUpDown();
@@ -43,8 +44,7 @@
             this.ditherAlpha = new System.Windows.Forms.Button();
             this.Alpha_err_fix = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Orginal_ = new System.Windows.Forms.PictureBox();
+            this.PBOrginal_ = new System.Windows.Forms.PictureBox();
             this.save = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
             this.groupBox_Dithering_A = new System.Windows.Forms.GroupBox();
@@ -54,6 +54,8 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label_animation_1 = new System.Windows.Forms.Label();
             this.open = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.current_frame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playback_fps)).BeginInit();
@@ -61,7 +63,7 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dither_steps)).BeginInit();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Orginal_)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PBOrginal_)).BeginInit();
             this.groupBox_Dithering_A.SuspendLayout();
             this.groupBox_Animation.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -87,7 +89,7 @@
             // current_frame
             // 
             this.current_frame.Location = new System.Drawing.Point(5, 10);
-            this.current_frame.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.current_frame.Margin = new System.Windows.Forms.Padding(2);
             this.current_frame.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -106,13 +108,14 @@
             // Dith_all
             // 
             this.Dith_all.Location = new System.Drawing.Point(5, 50);
-            this.Dith_all.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dith_all.Margin = new System.Windows.Forms.Padding(2);
             this.Dith_all.Name = "Dith_all";
             this.Dith_all.Size = new System.Drawing.Size(118, 31);
             this.Dith_all.TabIndex = 11;
             this.Dith_all.Text = "dither all in list";
             this.Dith_all.UseVisualStyleBackColor = true;
             this.Dith_all.Click += new System.EventHandler(this.Dith_all_Click);
+            this.Dith_all.MouseHover += new System.EventHandler(this.Dith_all_MouseHover);
             // 
             // animate
             // 
@@ -172,12 +175,13 @@
             this.dither.Text = "dither";
             this.dither.UseVisualStyleBackColor = true;
             this.dither.Click += new System.EventHandler(this.dither_Click);
+            this.dither.MouseHover += new System.EventHandler(this.dither_MouseHover);
             // 
             // GreyScale
             // 
             this.GreyScale.AutoSize = true;
             this.GreyScale.Location = new System.Drawing.Point(134, 45);
-            this.GreyScale.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GreyScale.Margin = new System.Windows.Forms.Padding(2);
             this.GreyScale.Name = "GreyScale";
             this.GreyScale.Size = new System.Drawing.Size(64, 17);
             this.GreyScale.TabIndex = 6;
@@ -207,7 +211,7 @@
             // 
             this.dither_steps.AccessibleDescription = "The ammount of different possible colors in dither image";
             this.dither_steps.Location = new System.Drawing.Point(5, 8);
-            this.dither_steps.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dither_steps.Margin = new System.Windows.Forms.Padding(2);
             this.dither_steps.Maximum = new decimal(new int[] {
             255,
             0,
@@ -237,6 +241,7 @@
             this.ditherAlpha.Text = "Dither alpha";
             this.ditherAlpha.UseVisualStyleBackColor = true;
             this.ditherAlpha.Click += new System.EventHandler(this.ditherAlpha_Click);
+            this.ditherAlpha.MouseEnter += new System.EventHandler(this.ditherAlpha_MouseEnter);
             // 
             // Alpha_err_fix
             // 
@@ -244,7 +249,7 @@
             this.Alpha_err_fix.Checked = true;
             this.Alpha_err_fix.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Alpha_err_fix.Location = new System.Drawing.Point(133, 18);
-            this.Alpha_err_fix.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Alpha_err_fix.Margin = new System.Windows.Forms.Padding(2);
             this.Alpha_err_fix.Name = "Alpha_err_fix";
             this.Alpha_err_fix.Size = new System.Drawing.Size(64, 17);
             this.Alpha_err_fix.TabIndex = 8;
@@ -254,7 +259,6 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label2);
-            this.groupBox4.Controls.Add(this.Orginal_);
             this.groupBox4.Controls.Add(this.save);
             this.groupBox4.Controls.Add(this.reset);
             this.groupBox4.Controls.Add(this.groupBox_Dithering);
@@ -265,31 +269,21 @@
             this.groupBox4.Location = new System.Drawing.Point(516, 0);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(8);
             this.groupBox4.Size = new System.Drawing.Size(225, 556);
             this.groupBox4.TabIndex = 18;
             this.groupBox4.TabStop = false;
             // 
-            // label2
+            // PBOrginal_
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 332);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 13);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Original Image";
-            // 
-            // Orginal_
-            // 
-            this.Orginal_.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Orginal_.Location = new System.Drawing.Point(16, 341);
-            this.Orginal_.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Orginal_.Name = "Orginal_";
-            this.Orginal_.Size = new System.Drawing.Size(150, 150);
-            this.Orginal_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.Orginal_.TabIndex = 22;
-            this.Orginal_.TabStop = false;
+            this.PBOrginal_.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PBOrginal_.Location = new System.Drawing.Point(292, 343);
+            this.PBOrginal_.Margin = new System.Windows.Forms.Padding(2);
+            this.PBOrginal_.Name = "PBOrginal_";
+            this.PBOrginal_.Size = new System.Drawing.Size(150, 150);
+            this.PBOrginal_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PBOrginal_.TabIndex = 22;
+            this.PBOrginal_.TabStop = false;
             // 
             // save
             // 
@@ -303,19 +297,21 @@
             this.save.Text = "save";
             this.save.UseVisualStyleBackColor = true;
             this.save.Click += new System.EventHandler(this.save_Click);
+            this.save.MouseHover += new System.EventHandler(this.save_MouseHover);
             // 
             // reset
             // 
             this.reset.AccessibleDescription = "Click to restart the program";
             this.reset.ForeColor = System.Drawing.SystemColors.ControlText;
             this.reset.Location = new System.Drawing.Point(170, 14);
-            this.reset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reset.Margin = new System.Windows.Forms.Padding(2);
             this.reset.Name = "reset";
             this.reset.Size = new System.Drawing.Size(49, 47);
             this.reset.TabIndex = 3;
             this.reset.Text = "reset";
             this.reset.UseVisualStyleBackColor = true;
             this.reset.Click += new System.EventHandler(this.reset_Click);
+            this.reset.MouseHover += new System.EventHandler(this.reset_MouseHover);
             // 
             // groupBox_Dithering_A
             // 
@@ -396,14 +392,27 @@
             this.open.Text = "open";
             this.open.UseVisualStyleBackColor = true;
             this.open.Click += new System.EventHandler(this.open_Click);
+            this.open.MouseHover += new System.EventHandler(this.open_MouseHover);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 332);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Original Image";
             // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(741, 556);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.PBOrginal_);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -416,7 +425,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dither_steps)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Orginal_)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PBOrginal_)).EndInit();
             this.groupBox_Dithering_A.ResumeLayout(false);
             this.groupBox_Dithering_A.PerformLayout();
             this.groupBox_Animation.ResumeLayout(false);
@@ -454,7 +463,8 @@
         private System.Windows.Forms.Label label_animation_1;
         private System.Windows.Forms.Button open;
         private System.Windows.Forms.Button reset;
-        private System.Windows.Forms.PictureBox Orginal_;
+        private System.Windows.Forms.PictureBox PBOrginal_;
+        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label2;
     }
 }
