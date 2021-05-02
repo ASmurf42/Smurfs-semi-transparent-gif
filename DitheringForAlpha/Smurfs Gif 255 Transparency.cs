@@ -14,7 +14,7 @@ namespace SmurfsAlphaDithering
         public Form1()
         {
             InitializeComponent();
-            this.Text = "Smurs Alpha Dithering"; //idk how to change application name through visual studio so this will have to do...
+            this.Text = "Smurfs Alpha Dithering"; //idk how to change application name through visual studio so this will have to do...
         }
 
         bool opened = false; //used for when saving and doing some checks
