@@ -25,7 +25,6 @@ namespace SmurfsAlphaDithering
         int completedOperations; //needs to be globals
         int totalOperations; // needs to be global
 
-
         private void open_Click(object sender, EventArgs e) //lets the user add/import images. Got this code from another projeckt, but might have stolen it from a tutorial...
         {
             DialogResult dialogResult_ = openFileDialog1.ShowDialog();
@@ -318,7 +317,6 @@ namespace SmurfsAlphaDithering
         static float Clamp(float num) //not fully sure how to implument this, I might just make it clamp between 0 and 255... it's 4 am and I'm very hungry
                                       //for future dev, if you want to change the range, change 0 and 255. Idealy you pass in a vector2 when you call the function to determine the range
         {
-
             if (num > 255)
                 return 255;
             if (num < 0)
@@ -328,7 +326,7 @@ namespace SmurfsAlphaDithering
 
         }
 
-        static void FixAlphaErr(Bitmap pb1, PictureBox Orginal_)
+        void FixAlphaErr(Bitmap pb1, PictureBox Orginal_)
         {
             Bitmap pre_limitColor = new Bitmap(Orginal_.Image);
 
@@ -345,8 +343,9 @@ namespace SmurfsAlphaDithering
 
                 }
             }
+            fixAlgorithmError(pb1);
         }
-        static void FixAlphaErrMultiThread(Bitmap Original, Bitmap pb1) //old implumentation that works with multi threading. Dosen't allow for re dithering for all frames but that's asking a bit much imo. if I would implument something like Orginal_ but for all frames it would porbably need a copy of the list AllFrames
+        void FixAlphaErrMultiThread(Bitmap Original, Bitmap pb1) //old implumentation that works with multi threading. Dosen't allow for re dithering for all frames but that's asking a bit much imo. if I would implument something like Orginal_ but for all frames it would porbably need a copy of the list AllFrames
         {
             for (int y = 0; y < pb1.Height; y++)
             {
@@ -360,8 +359,22 @@ namespace SmurfsAlphaDithering
 
                 }
             }
+            fixAlgorithmError(pb1);
         }
-
+        void fixAlgorithmError(Bitmap pb1)
+        {
+            if (fix_Algorithm_err.Checked)
+            {
+                for (int x = 0; x < pb1.Width - 1; x++)
+                {
+                    pb1.SetPixel(x, pb1.Height - 1, Color.Transparent);
+                }
+                for (int y = 0; y < pb1.Height - 1; y++)
+                {
+                    pb1.SetPixel(pb1.Width - 1, y, Color.Transparent);
+                }
+            }
+        }
         private void reset_Click(object sender, EventArgs e)
         {
             Application.Restart();
@@ -575,5 +588,6 @@ namespace SmurfsAlphaDithering
             toolTip1.Show("Dithers the Alpha (transparency) of All loaded frames", Dith_all);
 
         }
+
     }
 }
