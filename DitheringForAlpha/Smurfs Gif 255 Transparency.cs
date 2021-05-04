@@ -94,13 +94,17 @@ namespace SmurfsAlphaDithering
                             break;
                     }
                     //FileStream fs = new FileStream(Path.GetExtension(saveFileDialog_.FileName), new FileMode());
-                    int i = 1;
+                    int i = 0;
                     string path = saveFileDialog_.FileName;
                     foreach (Image item in AllFrames) //saves all files with user specified name plus a number for each frame
                     {
-                        item.Save(path.Split('.')[0] + i + "." + path.Split('.')[1]); //magic string trickery to get the number in place correctly while still beaing searchable by the user
-                        //Console.WriteLine(i + saveFileDialog_.FileName, imageFormat_);
+                        Console.WriteLine(path);
+                        Console.WriteLine(path.Split('.')[0] + i + "." + path.Split('.')[1]); //if there is a . somewhere in the filepath it all breaks. (firstname.lastname broke it)
+                        //item.Save(path.Split('.')[0] + i + "." + path.Split('.')[1]);
+
+                        //item.Save(path.Split('.')[0] + i + "." + path.Split('.')[1]); //magic string trickery to get the number in place correctly while still beaing searchable by the user
                         i++;
+                        //Console.WriteLine(i + saveFileDialog_.FileName, imageFormat_);
                     }
                 }
             }
