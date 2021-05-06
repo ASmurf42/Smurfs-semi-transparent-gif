@@ -27,6 +27,7 @@ namespace SmurfsAlphaDithering
 
         private void open_Click(object sender, EventArgs e) //lets the user add/import images. Got this code from another projeckt, but might have stolen it from a tutorial...
         {
+            openFileDialog1.Filter = "(*.png)|*.png";
             DialogResult dialogResult_ = openFileDialog1.ShowDialog();
 
             if (dialogResult_ == DialogResult.OK)
@@ -95,11 +96,19 @@ namespace SmurfsAlphaDithering
                     }
                     //FileStream fs = new FileStream(Path.GetExtension(saveFileDialog_.FileName), new FileMode());
                     int i = 0;
-                    string path = saveFileDialog_.FileName;
+                    string inputPath = saveFileDialog_.FileName;
+                    string path = Path.GetDirectoryName(inputPath);
+                    string filename = Path.GetFileName(inputPath);
+                    string extension = Path.GetExtension(inputPath);
+
+
                     foreach (Image item in AllFrames) //saves all files with user specified name plus a number for each frame
                     {
-                        Console.WriteLine(path);
-                        Console.WriteLine(path.Split('.')[0] + i + "." + path.Split('.')[1]); //if there is a . somewhere in the filepath it all breaks. (firstname.lastname broke it)
+                        //Console.WriteLine(path + @"\" + filename.Substring(0, filename.Length - extension.Length) + i + extension);
+                        //Console.WriteLine(path.Split('.')[0] + i + "." + path.Split('.')[1]); //if there is a . somewhere in the filepath it all breaks. (firstname.lastname broke it)
+
+                        item.Save(path + @"\" + filename.Substring(0, filename.Length - extension.Length) + i + extension);
+
                         //item.Save(path.Split('.')[0] + i + "." + path.Split('.')[1]);
 
                         //item.Save(path.Split('.')[0] + i + "." + path.Split('.')[1]); //magic string trickery to get the number in place correctly while still beaing searchable by the user
