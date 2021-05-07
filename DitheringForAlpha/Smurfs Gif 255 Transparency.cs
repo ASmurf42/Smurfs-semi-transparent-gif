@@ -20,14 +20,14 @@ namespace SmurfsAlphaDithering
         bool opened = false; //used for when saving and doing some checks
         List<Image> AllFrames = new List<Image>(); //contains all frames for when animation is used
         string path; //needed to use a string for it when saving mutiple images to one path
-        PictureBox Original_;
+        List<Image> AllOrginal_ = new List<Image>();
         bool isAllowedToPlayback = true; //global variable used to kill animation thread when dithering start, to avoid object allready in use err
         int completedOperations; //needs to be globals
         int totalOperations; // needs to be global
 
         private void open_Click(object sender, EventArgs e) //lets the user add/import images. Got this code from another projeckt, but might have stolen it from a tutorial...
         {
-            openFileDialog1.Filter = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp" + "|All Files|*.*";
+            openFileDialog1.Filter = "All Files|*.*|PNG|*.png|JPEG|*.jpg|BMP|*.bmp";
             DialogResult dialogResult_ = openFileDialog1.ShowDialog();
 
             if (dialogResult_ == DialogResult.OK)
@@ -35,16 +35,11 @@ namespace SmurfsAlphaDithering
                 path = Path.GetDirectoryName(openFileDialog1.FileName);
                 foreach (String file in openFileDialog1.FileNames)
                 {
-                    PictureBox pb = new PictureBox(); //creates a new picture box for each new frame, works fine now but could be improved upon for better ram usage potentially. 
                     Image loadedImage = Image.FromFile(file);
                     pictureBox1.Image = loadedImage;
-                    Original_ = pictureBox1;
-                    Original_.Image = loadedImage;
-
                     AllFrames.Add(loadedImage);
-                    pb.Height = loadedImage.Height; //some nessesary stuff to get images put into objects correctly
-                    pb.Width = loadedImage.Width;
-                    pb.Image = loadedImage;
+                    AllOrginal_.Add(loadedImage);
+
                     Dith_all.Text = "Dither all in list (" + AllFrames.Count + ")";
                 }
 
@@ -53,7 +48,7 @@ namespace SmurfsAlphaDithering
                 //pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
                 //Original_ = pictureBox1;
                 //Original_.Image = Image.FromFile(openFileDialog1.FileName);
-                PBOrginal_.Image = Original_.Image;
+                PBOrginal_.Image = AllOrginal_[0];
 
                 Console.WriteLine("height " + pictureBox1.Image.Height + "\n" + "width " + pictureBox1.Image.Width + "\n"); 
 
@@ -127,7 +122,7 @@ namespace SmurfsAlphaDithering
             //    //botched af way to do make it work, preferably it would need a rewetie of the way I do all the stuff do "setup" the algorithm (for loops and stuff)
             //}
             //else
-            pictureBox1.Image = DoDither(PBOrginal_.Image); //image of 
+            pictureBox1.Image = DoDither(AllOrginal_[(int)current_frame.Value]); //image of 
             
             //note to future self, inplument multithreading for lare immages, both of single dithering/AlphaD, maybe even for DitherAllFrames() as well
         }
@@ -224,7 +219,7 @@ namespace SmurfsAlphaDithering
             {
                 isAllowedToPlayback = false;
 
-                Bitmap pb1 = new Bitmap(PBOrginal_.Image);
+                Bitmap pb1 = new Bitmap(AllOrginal_[(int)current_frame.Value]);
                 Color OldPixel;
                 Color NewPixel;
                 Color tmp;
@@ -400,12 +395,11 @@ namespace SmurfsAlphaDithering
                 int i = 0;
                 Thread finished = new Thread(() => loadingBar());
                 finished.Start();
-                foreach (Image item in AllFrames)
+                foreach (Image item in AllOrginal_)
                 {
-                    Thread thread1 = new Thread(() => Dither_All_Frames(Alpha_err_fix, openFileDialog1, pictureBox1, item, i)); //ughh.... passing all thoes things feels wrong
-
-                    thread1.Start();
+                    Thread thread1 = new Thread(() => Dither_All_Frames(Alpha_err_fix, openFileDialog1, pictureBox1, i)); //ughh.... passing all thoes things feels wrong
                     i++;
+                    thread1.Start();
                 }
                 
             }
@@ -414,7 +408,6 @@ namespace SmurfsAlphaDithering
         void loadingBar()
         {
             totalOperations = AllFrames.Count * 2;
-            Console.WriteLine("Total operations " + totalOperations);
             while (completedOperations < totalOperations + 1)
             {
                 if (completedOperations == totalOperations)
@@ -426,19 +419,18 @@ namespace SmurfsAlphaDithering
 
         }
 
-        void Dither_All_Frames(CheckBox Alpha_err_fix, OpenFileDialog openFileDialog1, PictureBox pictureBox1, Image item, int i)
+        void Dither_All_Frames(CheckBox Alpha_err_fix, OpenFileDialog openFileDialog1, PictureBox pictureBox1, int i)
         {
             Console.WriteLine("Started dithering frame " + i);
             completedOperations++;
-            Bitmap orginal_frame = new Bitmap(item);
-            Bitmap pb1 = (Bitmap)item;
+            Bitmap orginal_frame = new Bitmap(AllOrginal_[i]);
+            Bitmap pb1 = (Bitmap)AllOrginal_[i];
             Color OldPixel;
             Color NewPixel;
             Color tmp;
 
             for (int y = 0; y < pb1.Height - 1; y++)
             {
-                //Console.WriteLine(i + " " + y);
                 for (int x = 1; x < pb1.Width - 1; x++)
                 {
 
