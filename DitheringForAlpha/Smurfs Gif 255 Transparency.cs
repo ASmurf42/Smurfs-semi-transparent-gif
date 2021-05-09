@@ -24,9 +24,12 @@ namespace SmurfsAlphaDithering
         bool isAllowedToPlayback = true; //global variable used to kill animation thread when dithering start, to avoid object allready in use err
         int completedOperations; //needs to be globals
         int totalOperations; // needs to be global
+        int currentFrame_;
 
         private void open_Click(object sender, EventArgs e) //lets the user add/import images. Got this code from another projeckt, but might have stolen it from a tutorial...
         {
+            currentFrame_ = (int)current_frame.Value;
+
             openFileDialog1.Filter = "All Files|*.*|PNG|*.png|JPEG|*.jpg|BMP|*.bmp";
             DialogResult dialogResult_ = openFileDialog1.ShowDialog();
 
@@ -392,16 +395,23 @@ namespace SmurfsAlphaDithering
             {
                 isAllowedToPlayback = false;
 
-                int i = 0;
+                
                 Thread finished = new Thread(() => loadingBar());
                 finished.Start();
-                foreach (Image item in AllOrginal_)
+                int i = 0;
+                foreach (var item in AllOrginal_)
                 {
                     Thread thread1 = new Thread(() => Dither_All_Frames(item, Alpha_err_fix, openFileDialog1, pictureBox1, i)); //ughh.... passing all thoes things feels wrong
-                    i++;
                     thread1.Start();
+                    i++;
                 }
-                
+                Console.WriteLine("Finished initializing all frames");
+                //for (int i = 0; i < AllOrginal_.Count; i++)
+                //{
+                //    Thread thread1 = new Thread(() => Dither_All_Frames(AllOrginal_[i], Alpha_err_fix, openFileDialog1, pictureBox1, i)); //ughh.... passing all thoes things feels wrong
+                //    thread1.Start();
+                //}
+
             }
         }
 
@@ -496,6 +506,8 @@ namespace SmurfsAlphaDithering
 
         private void animate_CheckedChanged(object sender, EventArgs e) //sets the correct state of the animation, basically turn it of and on correctly
         {
+             //current frame
+
             Thread animate_woork = new Thread(() => wooooooork(playback_fps, current_frame, animate, AllFrames, pictureBox1));
 
             if (animate.Checked)
@@ -503,21 +515,23 @@ namespace SmurfsAlphaDithering
                 isAllowedToPlayback = true;
                 animate_woork.Start();
             }
-            else
+            else { 
                 animate_woork.Abort();
+                current_frame.Value = currentFrame_;
+            }
+
         }
 
         void wooooooork (NumericUpDown playback_fps, NumericUpDown numericUpDown2, CheckBox animate, List<Image> AllFrames, PictureBox pictureBox1) //if you want to use a new thread you need to make it a seperate fucntion
         {
-            int i = (int)numericUpDown2.Value; //current frame
             while (animate.Checked) //this is all kinda garbage code but it seems to run 50 and 60 fps well so not planning on fixing it ;p
             {
-                pictureBox1.Image = AllFrames.ElementAt(i - 1);
+                pictureBox1.Image = AllFrames[currentFrame_ - 1];
                 Thread.Sleep(1000 / (int)playback_fps.Value);
-                if (i < AllFrames.Count)
-                    i++;
+                if (currentFrame_ < AllFrames.Count)
+                    currentFrame_++;
                 else
-                    i = 1;
+                    currentFrame_ = 1;
             }
         }
 
