@@ -397,7 +397,7 @@ namespace SmurfsAlphaDithering
                 finished.Start();
                 foreach (Image item in AllOrginal_)
                 {
-                    Thread thread1 = new Thread(() => Dither_All_Frames(Alpha_err_fix, openFileDialog1, pictureBox1, i)); //ughh.... passing all thoes things feels wrong
+                    Thread thread1 = new Thread(() => Dither_All_Frames(item, Alpha_err_fix, openFileDialog1, pictureBox1, i)); //ughh.... passing all thoes things feels wrong
                     i++;
                     thread1.Start();
                 }
@@ -407,24 +407,25 @@ namespace SmurfsAlphaDithering
 
         void loadingBar()
         {
+            completedOperations = 0;
             totalOperations = AllFrames.Count * 2;
             while (completedOperations < totalOperations + 1)
             {
                 if (completedOperations == totalOperations)
                 {
-                    Console.WriteLine("finished!");
+                    Console.WriteLine("\nfinished!\n");
                     completedOperations += 10;
                 }
             }
 
         }
 
-        void Dither_All_Frames(CheckBox Alpha_err_fix, OpenFileDialog openFileDialog1, PictureBox pictureBox1, int i)
+        void Dither_All_Frames(Image OGframe, CheckBox Alpha_err_fix, OpenFileDialog openFileDialog1, PictureBox pictureBox1, int i)
         {
             Console.WriteLine("Started dithering frame " + i);
             completedOperations++;
-            Bitmap orginal_frame = new Bitmap(AllOrginal_[i]);
-            Bitmap pb1 = (Bitmap)AllOrginal_[i];
+            Bitmap orginal_frame = new Bitmap(OGframe);
+            Bitmap pb1 = new Bitmap(OGframe);
             Color OldPixel;
             Color NewPixel;
             Color tmp;
@@ -487,6 +488,7 @@ namespace SmurfsAlphaDithering
             if (Alpha_err_fix.Checked)
                 FixAlphaErrMultiThread(orginal_frame, pb1);
             pictureBox1.Image = pb1;
+            AllFrames[i - 1] = pb1;
             Console.WriteLine("Complated dithering frame " + i);
             completedOperations++;
 
