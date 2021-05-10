@@ -28,37 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.panel1 = new System.Windows.Forms.Panel();
             this.popoutPB = new System.Windows.Forms.PictureBox();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.popoutPB)).BeginInit();
             this.SuspendLayout();
             // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.popoutPB);
+            this.panel1.Location = new System.Drawing.Point(13, 13);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(469, 440);
+            this.panel1.TabIndex = 0;
+            // 
             // popoutPB
             // 
-            this.popoutPB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.popoutPB.Location = new System.Drawing.Point(0, 0);
+            this.popoutPB.Location = new System.Drawing.Point(3, 3);
             this.popoutPB.Name = "popoutPB";
-            this.popoutPB.Size = new System.Drawing.Size(494, 465);
-            this.popoutPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.popoutPB.Size = new System.Drawing.Size(463, 434);
             this.popoutPB.TabIndex = 0;
             this.popoutPB.TabStop = false;
-            this.popoutPB.Click += new System.EventHandler(this.popoutPB_Click);
             // 
             // PopupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(494, 465);
-            this.Controls.Add(this.popoutPB);
+            this.Controls.Add(this.panel1);
             this.Name = "PopupForm";
             this.Text = "PopupForm";
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.popoutPB)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox popoutPB;
     }
 }

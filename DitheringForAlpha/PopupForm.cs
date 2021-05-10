@@ -15,6 +15,7 @@ namespace AlphaDithering
         public PopupForm(Image img)
         {
             InitializeComponent();
+            panel1.AutoScroll = true;
             popoutPB.Image = img;
         }
 
