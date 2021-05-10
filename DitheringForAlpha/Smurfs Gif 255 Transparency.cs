@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlphaDithering;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -566,10 +567,9 @@ namespace SmurfsAlphaDithering
 
             //tmpZoom.Height *= 2;
 
-
-
-
-
+            PopupForm popup = new PopupForm(pictureBox1.Image);
+            popup.Show(this);
+            
         }
 
         private void open_MouseHover(object sender, EventArgs e)
