@@ -231,6 +231,7 @@ namespace SmurfsAlphaDithering
 
                 for (int y = 0; y < pb1.Height - 1; y++)
                 {
+                    Console.WriteLine(y);
                     for (int x = 1; x < pb1.Width - 1; x++)
                     {
 
