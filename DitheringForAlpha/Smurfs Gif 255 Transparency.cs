@@ -21,38 +21,35 @@ namespace SmurfsAlphaDithering
         bool opened = false; //used for when saving and doing some checks
         List<Image> AllFrames = new List<Image>(); //contains all frames for when animation is used
         string path; //needed to use a string for it when saving mutiple images to one path
-        List<Image> AllOrginal_ = new List<Image>();
+        List<Image> AllOrginal_ = new List<Image>(); //A list of all imported images, for redundancy
         bool isAllowedToPlayback = true; //global variable used to kill animation thread when dithering start, to avoid object allready in use err
         int completedOperations; //needs to be globals
         int totalOperations; // needs to be global
-        int currentFrame_;
+        int currentFrame_; //global variable of the current frame
 
         private void open_Click(object sender, EventArgs e) //lets the user add/import images. Got this code from another projeckt, but might have stolen it from a tutorial...
         {
-            currentFrame_ = (int)current_frame.Value;
+            currentFrame_ = (int)current_frame.Value; //can't set it when it's created so I set it here
 
-            openFileDialog1.Filter = "All Files|*.*|PNG|*.png|JPEG|*.jpg|BMP|*.bmp";
+            openFileDialog1.Filter = "All Files|*.*|PNG|*.png|JPEG|*.jpg|BMP|*.bmp"; //filter for which files are allowed to be open
             DialogResult dialogResult_ = openFileDialog1.ShowDialog();
 
             if (dialogResult_ == DialogResult.OK)
             {
-                path = Path.GetDirectoryName(openFileDialog1.FileName);
-                foreach (String file in openFileDialog1.FileNames)
+                path = Path.GetDirectoryName(openFileDialog1.FileName); 
+                foreach (String file in openFileDialog1.FileNames) //for all paths/files that were opened in openFileDialog1
                 {
-                    Image loadedImage = Image.FromFile(file);
-                    pictureBox1.Image = loadedImage;
-                    AllFrames.Add(loadedImage);
-                    AllOrginal_.Add(loadedImage);
+                    Image loadedImage = Image.FromFile(file); //tmp variable 
+                    pictureBox1.Image = loadedImage; 
+                    AllFrames.Add(loadedImage); 
+                    AllOrginal_.Add(loadedImage); 
 
-                    Dith_all.Text = "Dither all in list (" + AllFrames.Count + ")";
+                    Dith_all.Text = "Dither all in list (" + AllFrames.Count + ")"; //sets the text of the "Dither all frames" button with the ammount of frames it will dither
                 }
 
                 current_frame.Maximum = AllFrames.Count - 1; //sets the correct range for the induvidual frame viewr thingy (play around with the program, you'll figure it out) so it dosen't get a index out of range
-
-                //pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
-                //Original_ = pictureBox1;
-                //Original_.Image = Image.FromFile(openFileDialog1.FileName);
-                PBOrginal_.Image = AllOrginal_[0];
+                
+                PBOrginal_.Image = AllOrginal_[0]; 
 
                 Console.WriteLine("height " + pictureBox1.Image.Height + Environment.NewLine + "width " + pictureBox1.Image.Width + "\n"); 
 
