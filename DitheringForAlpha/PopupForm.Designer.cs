@@ -31,6 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.popoutPB = new System.Windows.Forms.PictureBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.popoutPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -39,6 +40,7 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.trackBar1);
             this.panel1.Controls.Add(this.popoutPB);
             this.panel1.Location = new System.Drawing.Point(-2, -6);
@@ -57,6 +59,7 @@
             // 
             // trackBar1
             // 
+            this.trackBar1.BackColor = System.Drawing.SystemColors.Control;
             this.trackBar1.Location = new System.Drawing.Point(15, 19);
             this.trackBar1.Maximum = 32;
             this.trackBar1.Minimum = 1;
@@ -65,6 +68,15 @@
             this.trackBar1.TabIndex = 1;
             this.trackBar1.Value = 1;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 57);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "label1";
             // 
             // PopupForm
             // 
@@ -88,5 +100,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox popoutPB;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Label label1;
     }
 }

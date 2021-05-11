@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Drawing.Drawing2D;
 
 namespace AlphaDithering
 {
@@ -23,8 +24,10 @@ namespace AlphaDithering
             AdjustSeize();
             trackBar1.Value = 8;
             panel1.AutoScroll = true;
-            popoutPB.Image = new Bitmap(img, img.Width * 2, img.Height * 2);
+            popoutPB.Image = new Bitmap(img, img.Width, img.Height);
             IMAGE = (Bitmap)img;
+            label1.Text = (trackBar1.Value / 8f).ToString();
+
         }
 
         private void PopupForm_SizeChanged(object sender, EventArgs e)
@@ -42,24 +45,11 @@ namespace AlphaDithering
         {
             Console.WriteLine(trackBar1.Value / 8f);
             Bitmap img = (Bitmap)popoutPB.Image;
-
-            popoutPB.Image = new Bitmap(IMAGE, (int)(IMAGE.Width * (trackBar1.Value / 8f)), (int)(IMAGE.Height * (trackBar1.Value / 8f)));
-
-
-
-            //Thread thread1 = new Thread(() => ScaleIMG());
-            //thread1.Start();
-        }
-
-        void ScaleIMG()
-        {
-
-            //Bitmap img = (Bitmap)popoutPB.Image;
-            //popoutPB.Image = new Bitmap(img, (int)(img.Width * (trackBar1.Value / 8f)), (int)(img.Height * (trackBar1.Value / 8f)));
-
             
-
+            
+            popoutPB.Image = new Bitmap(IMAGE, (int)(IMAGE.Width * (trackBar1.Value / 8f)), (int)(IMAGE.Height * (trackBar1.Value / 8f)));
+            
+            label1.Text = (trackBar1.Value / 8f).ToString();
         }
-
     }
 }
