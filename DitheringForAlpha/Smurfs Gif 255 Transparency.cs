@@ -49,14 +49,14 @@ namespace SmurfsAlphaDithering
 
                 current_frame.Maximum = AllFrames.Count - 1; //sets the correct range for the induvidual frame viewr thingy (play around with the program, you'll figure it out) so it dosen't get a index out of range
                 
-                PBOrginal_.Image = AllOrginal_[0]; 
+                PBOrginal_.Image = AllOrginal_[0]; //sets the first frame as the one original one, this is kinda reduntant tbh
 
                 Console.WriteLine("height " + pictureBox1.Image.Height + Environment.NewLine + "width " + pictureBox1.Image.Width + "\n"); 
 
                 groupBox_Dithering.Enabled = true; //enables the buttons for dithering
                 groupBox_Dithering_A.Enabled = true; //enables the buttons for Alpha dithering
                 save.Enabled = true; //enables save
-                pictureBox1.Enabled = true;
+                pictureBox1.Enabled = true; //enabels the main picturebox, (so you can click and pop out a new window)
 
                 if (AllFrames.Count > 1)
                 {
@@ -77,8 +77,8 @@ namespace SmurfsAlphaDithering
                 ImageFormat imageFormat_ = ImageFormat.Png; 
                 if (saveFileDialog_.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    string ext /*????*/ = Path.GetExtension(saveFileDialog_.FileName);
-                    switch (ext)
+                    string extensios_ = Path.GetExtension(saveFileDialog_.FileName); 
+                    switch (extensios_)
                     {
                         case ".jpg":
                             imageFormat_ = ImageFormat.Jpeg;
@@ -91,9 +91,10 @@ namespace SmurfsAlphaDithering
 
                             break;
                     }
-                    int i = 0;
 
-                    string inputPath = saveFileDialog_.FileName;
+                    //variables used in saving files and givving them correct names
+                    int i = 0;
+                    string inputPath = saveFileDialog_.FileName; 
                     string path = Path.GetDirectoryName(inputPath);
                     string filename = Path.GetFileName(inputPath);
                     string extension = Path.GetExtension(inputPath);
@@ -124,7 +125,8 @@ namespace SmurfsAlphaDithering
             //    //botched af way to do make it work, preferably it would need a rewetie of the way I do all the stuff do "setup" the algorithm (for loops and stuff)
             //}
             //else
-            pictureBox1.Image = DoDither(AllOrginal_[(int)current_frame.Value]); //image of 
+
+            pictureBox1.Image = DoDither(AllOrginal_[(int)current_frame.Value]); //Dithers the original version of the current displayed frame 
             
             //note to future self, inplument multithreading for lare immages, both of single dithering/AlphaD, maybe even for DitherAllFrames() as well
         }
@@ -132,29 +134,30 @@ namespace SmurfsAlphaDithering
 
         Bitmap DoDither(Image toDither) //normal floyd steinberg dithering, semi optemised, read the wiki on it and code trains vid for an explinatio of the algo
         {
-            isAllowedToPlayback = false;
+            isAllowedToPlayback = false; //sets a global variable used for playback to false, this is supposed to stop the animation thread to avoind mutiple things trying to referance the frames but in reality this dosen't work
 
-            Bitmap pb1 = new Bitmap(toDither);
-            Color OldPixel;
-            Color NewPixel;
-            Color tmp;
+            Bitmap pb1 = new Bitmap(toDither); //creates a non instanced version of the currently displayed image
+            Color OldPixel; //used later in the algorithem, see wiki for pseudocode
+            Color NewPixel; //used later in the algorithem, see wiki for pseudocode
+            Color tmp; //used to avoid calling mutiple times for the same color object, just a tmp thingy
 
             if (opened)
             {
-                if (GreyScale.Checked)
+                if (GreyScale.Checked) //greyscales the image if the checkbox is checked (they way I greyscale is kinda flawd)
                     GreyScaleImage(pb1);
 
                 for (int y = 0; y < pb1.Height - 1; y++)
                 {
-                    Console.WriteLine(y);
+                    Console.WriteLine(y); //writes the current line it's working on
                     for (int x = 1; x < pb1.Width - 1; x++)
                     {
-                        OldPixel = Color.FromArgb(pb1.GetPixel(x, y).ToArgb());
+                        OldPixel = Color.FromArgb(pb1.GetPixel(x, y).ToArgb()); //sets the "oldpixel" to the color of the unedited version of the pixel (unedited as in before the algorithem is run)
 
-                        NewPixel = LimitColors(x, y, OldPixel, (int)dither_steps.Value);
+                        NewPixel = LimitColors(x, y, OldPixel, (int)dither_steps.Value); //Limits or rounds the color, 0 and 255 for example
                         pb1.SetPixel(x, y, NewPixel); //uncomment for cool effect lol
-                        Vector4 qErr = GetErr(x, y, OldPixel, NewPixel);
+                        Vector4 qErr = GetErr(x, y, OldPixel, NewPixel); //gets the quant error for the current pixel
 
+                        //the algorithem, see wiki for a clearer pesudo code version
                         tmp = pb1.GetPixel(x + 1, y); //pretty sure .GetPixel was a kinda slow operatio so I save it to a varible to be used 4 times per step
                         pb1.SetPixel(
                             x + 1, y, Color.FromArgb(
@@ -194,8 +197,8 @@ namespace SmurfsAlphaDithering
                     }
                 }
             }
-            isAllowedToPlayback = true;
-            return pb1;
+            
+            return pb1; //returns the dithered image
         }
 
         private void GreyScaleImage(Bitmap pb1)
@@ -425,6 +428,7 @@ namespace SmurfsAlphaDithering
                 if (completedOperations == totalOperations)
                 {
                     Console.WriteLine("\nfinished!\n");
+                    isAllowedToPlayback = true;
                     completedOperations += 10;
                 }
             }
