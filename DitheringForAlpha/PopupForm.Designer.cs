@@ -38,16 +38,17 @@
             // 
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.popoutPB);
-            this.panel1.Location = new System.Drawing.Point(13, 13);
+            this.panel1.Location = new System.Drawing.Point(-2, -6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(469, 440);
+            this.panel1.Size = new System.Drawing.Size(499, 474);
             this.panel1.TabIndex = 0;
             // 
             // popoutPB
             // 
-            this.popoutPB.Location = new System.Drawing.Point(3, 3);
+            this.popoutPB.Location = new System.Drawing.Point(0, 0);
             this.popoutPB.Name = "popoutPB";
-            this.popoutPB.Size = new System.Drawing.Size(463, 434);
+            this.popoutPB.Size = new System.Drawing.Size(520, 500);
+            this.popoutPB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.popoutPB.TabIndex = 0;
             this.popoutPB.TabStop = false;
             // 
@@ -59,7 +60,9 @@
             this.Controls.Add(this.panel1);
             this.Name = "PopupForm";
             this.Text = "PopupForm";
+            this.SizeChanged += new System.EventHandler(this.PopupForm_SizeChanged);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.popoutPB)).EndInit();
             this.ResumeLayout(false);
 

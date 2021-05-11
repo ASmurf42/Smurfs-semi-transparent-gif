@@ -59,6 +59,7 @@ namespace SmurfsAlphaDithering
                 groupBox_Dithering.Enabled = true; //enables the buttons for dithering
                 groupBox_Dithering_A.Enabled = true; //enables the buttons for Alpha dithering
                 save.Enabled = true; //enables save
+                pictureBox1.Enabled = true;
 
                 if (AllFrames.Count > 1)
                 {
