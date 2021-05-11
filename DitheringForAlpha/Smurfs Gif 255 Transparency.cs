@@ -54,7 +54,7 @@ namespace SmurfsAlphaDithering
                 //Original_.Image = Image.FromFile(openFileDialog1.FileName);
                 PBOrginal_.Image = AllOrginal_[0];
 
-                Console.WriteLine("height " + pictureBox1.Image.Height + "\n" + "width " + pictureBox1.Image.Width + "\n"); 
+                Console.WriteLine("height " + pictureBox1.Image.Height + Environment.NewLine + "width " + pictureBox1.Image.Width + "\n"); 
 
                 groupBox_Dithering.Enabled = true; //enables the buttons for dithering
                 groupBox_Dithering_A.Enabled = true; //enables the buttons for Alpha dithering
@@ -407,7 +407,9 @@ namespace SmurfsAlphaDithering
                     thread1.Start();
                     i++;
                 }
+
                 Console.WriteLine("Finished initializing all frames");
+
                 //for (int i = 0; i < AllOrginal_.Count; i++)
                 //{
                 //    Thread thread1 = new Thread(() => Dither_All_Frames(AllOrginal_[i], Alpha_err_fix, openFileDialog1, pictureBox1, i)); //ughh.... passing all thoes things feels wrong

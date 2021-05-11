@@ -86,9 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PictureBoxWithInterpolationMode.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="PictureBoxWithInterpolationMode.cs" />
     <Compile Include="PopupForm.cs">
       <SubType>Form</SubType>
     </Compile>
