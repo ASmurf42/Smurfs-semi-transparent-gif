@@ -287,7 +287,7 @@ namespace SmurfsAlphaDithering
                     }
                 }
                 if (Alpha_err_fix.Checked)
-                    FixAlphaErr(pb1, PBOrginal_);
+                    FixAlphaErr((Bitmap)AllOrginal_[currentFrame_], pb1);
                 pictureBox1.Image = pb1;
 
                 isAllowedToPlayback = true;
@@ -332,26 +332,8 @@ namespace SmurfsAlphaDithering
 
         }
 
-        void FixAlphaErr(Bitmap pb1, PictureBox Orginal_)
-        {
-            Bitmap pre_limitColor = new Bitmap(Orginal_.Image);
-
-
-            for (int y = 0; y < pb1.Height; y++)
-            {
-                for (int x = 0; x < pb1.Width; x++)
-                {
-                    Color OldPixel = pre_limitColor.GetPixel(x, y);
-                    if (OldPixel.A == 255)
-                    {
-                        pb1.SetPixel(x, y, OldPixel);
-                    }
-
-                }
-            }
-            fixAlgorithmError(pb1);
-        }
-        void FixAlphaErrMultiThread(Bitmap Original, Bitmap pb1) //old implumentation that works with multi threading. Dosen't allow for re dithering for all frames but that's asking a bit much imo. if I would implument something like Orginal_ but for all frames it would porbably need a copy of the list AllFrames
+        
+        void FixAlphaErr(Bitmap Original, Bitmap pb1) //old implumentation that works with multi threading. Dosen't allow for re dithering for all frames but that's asking a bit much imo. if I would implument something like Orginal_ but for all frames it would porbably need a copy of the list AllFrames
         {
             for (int y = 0; y < pb1.Height; y++)
             {
@@ -433,7 +415,6 @@ namespace SmurfsAlphaDithering
                     completedOperations += 10;
                 }
             }
-
         }
 
         void Dither_All_Frames(Image OGframe, CheckBox Alpha_err_fix, OpenFileDialog openFileDialog1, PictureBox pictureBox1, int i)
@@ -502,7 +483,7 @@ namespace SmurfsAlphaDithering
                 }
             }
             if (Alpha_err_fix.Checked)
-                FixAlphaErrMultiThread(orginal_frame, pb1);
+                FixAlphaErr(orginal_frame, pb1);
             pictureBox1.Image = pb1;
             AllFrames[i - 1] = pb1;
             Console.WriteLine("Complated dithering frame " + i);
@@ -606,6 +587,5 @@ namespace SmurfsAlphaDithering
             toolTip1.Show("Dithers the Alpha (transparency) of All loaded frames", Dith_all);
 
         }
-
     }
 }
