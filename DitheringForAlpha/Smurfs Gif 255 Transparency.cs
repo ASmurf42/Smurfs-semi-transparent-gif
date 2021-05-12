@@ -220,11 +220,13 @@ namespace SmurfsAlphaDithering
 
         private void ditherAlpha_Click(object sender, EventArgs e) //Dithers only the alpha channel
         {
+            int important_ish;
             if (opened)
             {
                 isAllowedToPlayback = false;
 
                 Bitmap pb1 = new Bitmap(AllOrginal_[(int)current_frame.Value]);
+                important_ish = (int)current_frame.Value;
                 Color OldPixel;
                 Color NewPixel;
                 Color tmp;
@@ -287,8 +289,9 @@ namespace SmurfsAlphaDithering
                     }
                 }
                 if (Alpha_err_fix.Checked)
-                    FixAlphaErr((Bitmap)AllOrginal_[currentFrame_], pb1);
+                    FixAlphaErr((Bitmap)AllOrginal_[important_ish], pb1);
                 pictureBox1.Image = pb1;
+                AllFrames[important_ish] = pb1;
 
                 isAllowedToPlayback = true;
             }
@@ -504,7 +507,7 @@ namespace SmurfsAlphaDithering
             }
             else { 
                 animate_woork.Abort();
-                current_frame.Value = currentFrame_;
+                current_frame.Value = currentFrame_ - 1;
             }
 
         }
