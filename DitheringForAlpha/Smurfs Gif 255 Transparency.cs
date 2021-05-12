@@ -527,35 +527,7 @@ namespace SmurfsAlphaDithering
 
         private void pictureBox1_Click(object sender, EventArgs e) //code for zooming in on pictubebox1 when its clicked, if possible it should zoom in on the cursors possition
         {
-            //if (!isZoomed)
-            //{
-            //    Graphics graphics = Graphics.FromImage(pictureBox1.Image);
-            //    PictureBox zoomed = pictureBox1;
-            //    zoomed.Height = zoomed.Height * 2;
-            //    zoomed.Width = zoomed.Width * 2;
-            //    graphics.DrawImage(zoomed.Image, new Rectangle(-1 * (int)(zoomed.Width * 0.5f), -1 * (int)(zoomed.Width * 0.5f), zoomed.Width, zoomed.Height));
-            //    isZoomed = true;
-            //}
-            //else
-            //{
-            //    Graphics graphics = Graphics.FromImage(pictureBox1.Image);
-            //    Bitmap zoomed = pictureBox1;
-            //    zoomed.Height = (int)(zoomed.Height * 0.5);
-            //    zoomed.Width = (int)(zoomed.Width * 0.5);
-            //    //graphics.DrawImage(zoomed.Image, new Rectangle(-100, -100, zoomed.Width, zoomed.Height));
-
-
-
-            //    pictureBox1.Image = zoomed.Image;
-            //    isZoomed = false;
-            //}
-
-            //pictureBox1.ClientSize = new Size(pictureBox1.Width / 2, pictureBox1.Height / 2);
-
-            //PictureBox tmpZoom = Original_;
-
-            //tmpZoom.Height *= 2;
-
+            
             PopupForm popup = new PopupForm(pictureBox1.Image);
             popup.Show(this);
             
