@@ -37,7 +37,7 @@ namespace AlphaDithering
 
         void AdjustSeize()
         {
-            panel1.Height = Height - 35;
+            panel1.Height = Height - 95;
             panel1.Width = Width - 15;
         }
 
