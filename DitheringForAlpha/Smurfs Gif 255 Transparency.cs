@@ -101,7 +101,7 @@ namespace SmurfsAlphaDithering
 
                     foreach (Image item in AllFrames) //saves all files with user specified name plus a number for each frame
                     {
-                        item.Save(path + @"\" + filename.Substring(0, filename.Length - extension.Length) + i + extension);
+                        item.Save(path + @"\" + filename.Substring(0, filename.Length - extension.Length) + "_" + i + extension);
 
                         i++;
                     }
